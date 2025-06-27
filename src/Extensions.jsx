@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Extensions({ icon, title, description, onToggle, isActive }) {
+export function Extensions({ icon, title, description, onToggle, isActive, onRemove, id }) {
     return (
         <div className="bg-gray-800 p-4 rounded-xl border border-gray-500 mb-4">
             <div className="flex items-start gap-4">
@@ -11,12 +11,17 @@ export function Extensions({ icon, title, description, onToggle, isActive }) {
             </div>
             </div>
             <div className="mt-5 flex justify-between">
-            <button className="text-sm rounded-full px-4 py-1 border border-gray-300">Remove</button>
-            <button onClick={onToggle} className={`text-sm rounded-full px-4 py-1 border font-medium transition-colors duration-200 ${
+            <button className="text-sm rounded-full px-4 py-1 border border-gray-300" onClick={() => onRemove(id)}>Remove</button>
+            <button onClick={onToggle} className={`items-center w-10 h-5 flex rounded-full p-1 transition-colors duration-300 ${
             isActive
-                ? 'bg-green-600 text-white border-green-700 hover:bg-green-700'
-                : 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'
-            }`}></button>
+                ? 'bg-red-500'
+                : 'bg-gray-600'
+            }`}>
+                <div
+                className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300
+                    ${isActive ? 'translate-x-5' : '-translate-x-1'}`}>
+                </div>
+            </button>
             </div>
         </div>
     )

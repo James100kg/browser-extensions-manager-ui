@@ -14,6 +14,8 @@ import domSnapshotIcon from "./assets/images/logo-dom-snapshot.svg"
 import consolePlusIcon from "./assets/images/logo-console-plus.svg"
 
 export function ParentWrapper() {
+    const [isDarkMode, setIsDarkMode] = useState(true)
+    const [filter, setFilter] = useState("All")
     const [extensions, setExtensions] = useState([
         {
             id: 1,
@@ -109,9 +111,32 @@ export function ParentWrapper() {
         );
     }
 
+    function handleFilterChange(value) {
+        setFilter(value)
+    }
+    
+    const filteredExtensions = extensions.filter((ext) => {
+        if (filter === "All") return true
+        if (filter === "Active") return ext.active
+        if (filter === "Inactive") return !ext.active
+    })
+
+    function handleRemove(id) {
+        setExtensions(prev => prev.filter(ext=> ext.id !== id))
+    }
+
+    function toggleDarkMode() {
+        setIsDarkMode(prev => !prev)
+        console.log("is Darkmode")
+    }
+
     return (
         <MobileDesign
-        extensions={extensions}
-        onToggle={onToggle} />
+        extensions={filteredExtensions}
+        onToggle={onToggle}
+        onFilterChange={handleFilterChange}
+        onRemove={handleRemove}
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode} />
     )
 }
